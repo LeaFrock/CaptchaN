@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <PackageId>CaptchaN.DI.Microsoft</PackageId>
+    <Title>CaptchaN.DI.Microsoft</Title>
+    <Authors>LeaFrock</Authors>
+    <Version>0.1.1</Version>
+    <Product>CaptchaN.DI.Microsoft</Product>
+    <Description>CaptchaN DI for .NET default container.</Description>
+    <Copyright>Copyright © LeaFrock 2021</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>captcha;csharp</PackageTags>
+    <PackageProjectUrl>https://github.com/LeaFrock/CaptchaN</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/LeaFrock/CaptchaN.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReleaseNotes>Remove FontRandomer.</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CaptchaN" Version="0.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
