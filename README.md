@@ -7,6 +7,8 @@
 [CaptchaN-DI-Microsoft-SvgUrl]: https://img.shields.io/nuget/v/CaptchaN.DI.Microsoft.svg
 [CaptchaN-DI-Microsoft-NugetUrl]: https://www.nuget.org/packages/CaptchaN.DI.Microsoft
 
+![Image Demo](https://github.com/LeaFrock/CaptchaN/blob/main/Images/name.jpeg)
+
 Generate captcha images based on [ImageSharp][ImageSharpUrl] and .NET.
 >基于[ImageSharp][ImageSharpUrl]项目和.NET，生成图形验证码。
 
