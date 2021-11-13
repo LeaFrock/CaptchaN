@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using CaptchaN.Abstractions;
+﻿using CaptchaN.Abstractions;
 using CaptchaN.Helpers;
 using SixLabors.Fonts;
 

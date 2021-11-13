@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using CaptchaN.Abstractions;
+﻿using CaptchaN.Abstractions;
 using CaptchaN.Helpers;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;

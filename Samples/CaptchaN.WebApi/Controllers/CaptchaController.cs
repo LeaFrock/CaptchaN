@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CaptchaN.Abstractions;
+﻿using CaptchaN.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using CaptchaN.Abstractions;
+﻿using CaptchaN.Abstractions;
 using SixLabors.Fonts;
 
 namespace CaptchaN.Factories

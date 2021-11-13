@@ -1,11 +1,5 @@
-using System.IO;
 using CaptchaN.Abstractions;
 using CaptchaN.Factories;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace CaptchaN.WebApi
 {

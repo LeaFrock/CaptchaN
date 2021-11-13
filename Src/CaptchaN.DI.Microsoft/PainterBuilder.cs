@@ -1,5 +1,4 @@
-﻿using System;
-using CaptchaN.Abstractions;
+﻿using CaptchaN.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CaptchaN.DI.Microsoft

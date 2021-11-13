@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-
-namespace CaptchaN.Abstractions
+﻿namespace CaptchaN.Abstractions
 {
     public interface IPainter
     {
