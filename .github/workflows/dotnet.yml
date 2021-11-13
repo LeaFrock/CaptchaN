@@ -1,0 +1,32 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore Lib
+      run: dotnet restore ./Src
+    - name: Build Lib
+      run: dotnet build ./Src/CaptchaN.sln --no-restore
+      
+    - name: Restore CaptchaN.WebApi
+      run: dotnet restore ./Samples/CaptchaN.WebApi
+    - name: Build CaptchaN.WebApi
+      run: dotnet build ./Samples/CaptchaN.WebApi/CaptchaN.WebApi.csproj --no-restore
+      
+    #- name: Test
+    #  run: dotnet test --no-build --verbosity normal
