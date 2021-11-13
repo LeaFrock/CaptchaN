@@ -12,7 +12,7 @@
 Generate captcha images based on [ImageSharp][ImageSharpUrl] and .NET.
 >基于[ImageSharp][ImageSharpUrl]项目和.NET，生成图形验证码。
 
-[![.NET 5](https://img.shields.io/badge/.NET-5.x-brightgreen)][DotNetUrl]
+[![.NET 6](https://img.shields.io/badge/.NET-6-brightgreen)][DotNetUrl]
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Packages |Nuget包
