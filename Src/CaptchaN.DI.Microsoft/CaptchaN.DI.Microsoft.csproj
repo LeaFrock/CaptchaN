@@ -7,21 +7,21 @@
     <PackageId>CaptchaN.DI.Microsoft</PackageId>
     <Title>CaptchaN.DI.Microsoft</Title>
     <Authors>LeaFrock</Authors>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Product>CaptchaN.DI.Microsoft</Product>
     <Description>CaptchaN DI for .NET default container.</Description>
-    <Copyright>Copyright © LeaFrock 2021</Copyright>
+    <Copyright>Copyright © LeaFrock 2022</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>captcha;csharp</PackageTags>
+    <PackageTags>captcha;imagesharp</PackageTags>
     <PackageProjectUrl>https://github.com/LeaFrock/CaptchaN</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LeaFrock/CaptchaN.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Upgrade to .NET 6</PackageReleaseNotes>
+    <PackageReleaseNotes>Upgrade to ImageSharp 2.0</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CaptchaN" Version="1.0.0" />
+    <PackageReference Include="CaptchaN" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 

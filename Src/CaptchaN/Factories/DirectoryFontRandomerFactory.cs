@@ -14,7 +14,7 @@ namespace CaptchaN.Factories
             foreach (var file in files)
             {
                 using var s = file.OpenRead();
-                fc.Install(s);
+                fc.Add(s);
             }
             return new FontRandomer(fc);
         }

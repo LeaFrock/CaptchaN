@@ -9,4 +9,8 @@
     <ProjectReference Include="..\..\Src\CaptchaN.DI.Microsoft\CaptchaN.DI.Microsoft.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Fonts\" />
+  </ItemGroup>
+
 </Project>
