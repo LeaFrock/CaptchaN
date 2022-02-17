@@ -22,6 +22,7 @@ namespace CaptchaN.WebApi
 
             services.Configure<PainterOption>(Configuration.GetSection("CaptchaN"));
             services.AddCaptchaN()
+                //.UseFontRandomer(new SystemFontRandomerFactory());
                 .UseFontRandomer(new DirectoryFontRandomerFactory() { FontDir = new(Path.Combine(HostEnvironment.ContentRootPath, "Fonts")) });
         }
 
