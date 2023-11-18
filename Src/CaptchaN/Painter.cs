@@ -1,5 +1,4 @@
 ﻿using CaptchaN.Abstractions;
-using CaptchaN.Helpers;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -49,7 +48,7 @@ namespace CaptchaN
 
             void Operate(IImageProcessingContext ctx)
             {
-                var random = RandomHelper.CurrentRandom;
+                var random = Random.Shared;
                 float fontSize = RandomFontSize(option.Width, option.Height, codeText.Length);
                 ctx.BackgroundColor(option.UseBlackWhiteOnly ? Color.White : _colorRandomer.RandomLight());
                 //.Glow(_colorRandomer.RandomLight())
@@ -108,7 +107,7 @@ namespace CaptchaN
                     {
                         for (int i = 1; i < option.LineCount; i++)
                         {
-                            ctx.DrawLines(color: option.UseBlackWhiteOnly ? Color.Black : _colorRandomer.RandomDark(),
+                            ctx.DrawLine(color: option.UseBlackWhiteOnly ? Color.Black : _colorRandomer.RandomDark(),
                                 thickness: DefaultLineThickness,
                                 new PointF(random.Next(0, option.Width / 2), random.Next(1, option.Height)),
                                 new PointF(random.Next(option.Width / 2 + 1, option.Width), random.Next(1, option.Height))

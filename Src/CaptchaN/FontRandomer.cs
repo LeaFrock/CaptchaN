@@ -1,5 +1,4 @@
 ﻿using CaptchaN.Abstractions;
-using CaptchaN.Helpers;
 using SixLabors.Fonts;
 
 namespace CaptchaN
@@ -15,17 +14,22 @@ namespace CaptchaN
         internal FontRandomer(FontFamily[] fontFamilies)
         {
             ArgumentNullException.ThrowIfNull(fontFamilies);
-            if(fontFamilies.Length < 1)
+#if NET8_0_OR_GREATER
+            ArgumentOutOfRangeException.ThrowIfLessThan(fontFamilies.Length, 1, nameof(fontFamilies));
+#else
+            if (fontFamilies.Length < 1)
             {
+
                 throw new ArgumentOutOfRangeException(nameof(fontFamilies), "Array length must be over 0.");
             }
+#endif
 
             _fontFamilies = fontFamilies;
         }
 
         public Font Random(float size, FontStyle fontStyle)
         {
-            int index = RandomHelper.CurrentRandom.Next(0, _fontFamilies.Length);
+            int index = System.Random.Shared.Next(_fontFamilies.Length);
 #if DEBUG
             System.Diagnostics.Debug.WriteLine(_fontFamilies[index].Name);
 #endif

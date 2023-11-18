@@ -36,10 +36,9 @@ namespace CaptchaN.DI.Microsoft
         public PainterBuilder UseFontRandomer(IFontRandomerFactory fontRandomerFactory)
         {
             var fontRandomer = fontRandomerFactory.CreateFontRandomer();
-            if (fontRandomer is null)
-            {
-                throw new NullReferenceException("Created FontRandomer is null.");
-            }
+
+            ArgumentNullException.ThrowIfNull(fontRandomer);
+
             _services.AddSingleton(fontRandomer);
             return this;
         }

@@ -1,13 +1,12 @@
 ﻿using CaptchaN.Abstractions;
-using CaptchaN.Helpers;
 using SixLabors.ImageSharp;
 
 namespace CaptchaN
 {
     public class ColorRandomer : IColorRandomer
     {
-        private readonly static Color[] _darkPool = new Color[]
-        {
+        private readonly static Color[] _darkPool =
+        [
             Color.Black,
             Color.MidnightBlue,
             Color.MediumBlue,
@@ -19,10 +18,10 @@ namespace CaptchaN
             Color.OrangeRed,
             Color.Maroon,
             Color.DarkViolet
-        };
+        ];
 
-        private readonly static Color[] _lightPool = new Color[]
-        {
+        private readonly static Color[] _lightPool =
+        [
             Color.White,
             Color.Snow,
             Color.GhostWhite,
@@ -47,7 +46,7 @@ namespace CaptchaN
             Color.LightYellow,
             Color.Pink,
             Color.PaleGreen
-        };
+        ];
 
         public Color RandomDark() => RandomColor(_darkPool);
 
@@ -55,7 +54,7 @@ namespace CaptchaN
 
         private static Color RandomColor(Color[] pool)
         {
-            int index = RandomHelper.CurrentRandom.Next(0, pool.Length);
+            int index = Random.Shared.Next(0, pool.Length);
             return pool[index];
         }
     }
