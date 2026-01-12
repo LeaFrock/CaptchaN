@@ -1,11 +1,10 @@
-﻿using CaptchaN.Abstractions;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 
-namespace CaptchaN
+namespace CaptchaN.Drawing.ImageSharp;
+
+public static class Colors
 {
-    public class ColorRandomer : IColorRandomer
-    {
-        private readonly static Color[] _darkPool =
+    public static IReadOnlyList<Color> DarkPool { get; set; } =
         [
             Color.Black,
             Color.MidnightBlue,
@@ -20,7 +19,7 @@ namespace CaptchaN
             Color.DarkViolet
         ];
 
-        private readonly static Color[] _lightPool =
+    public static IReadOnlyList<Color> LightPool { get; set; } =
         [
             Color.White,
             Color.Snow,
@@ -48,14 +47,11 @@ namespace CaptchaN
             Color.PaleGreen
         ];
 
-        public Color RandomDark() => RandomColor(_darkPool);
+    public static Color RandomDark(Random rand) => DarkPool[rand.Next(DarkPool.Count)];
 
-        public Color RandomLight() => RandomColor(_lightPool);
+    public static Color RandomDark(Random rand, float alpha) => RandomDark(rand).WithAlpha(alpha);
 
-        private static Color RandomColor(Color[] pool)
-        {
-            int index = Random.Shared.Next(0, pool.Length);
-            return pool[index];
-        }
-    }
+    public static Color RandomLight(Random rand) => LightPool[rand.Next(LightPool.Count)];
+
+    public static Color RandomLight(Random rand, float alpha) => RandomLight(rand).WithAlpha(alpha);
 }

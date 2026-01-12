@@ -1,45 +1,38 @@
 # CaptchaN
 
 [DotNetUrl]: https://dotnet.microsoft.com/download
-[ImageSharpUrl]: https://github.com/SixLabors/ImageSharp
-[CaptchaN-SvgUrl]: https://img.shields.io/nuget/v/CaptchaN.svg
-[CaptchaN-NugetUrl]: https://www.nuget.org/packages/CaptchaN
-[CaptchaN-DI-Microsoft-SvgUrl]: https://img.shields.io/nuget/v/CaptchaN.DI.Microsoft.svg
-[CaptchaN-DI-Microsoft-NugetUrl]: https://www.nuget.org/packages/CaptchaN.DI.Microsoft
+[CaptchaN-Abstractions-SvgUrl]: https://img.shields.io/nuget/v/CaptchaN.Abstractions.svg
+[CaptchaN-Abstractions-NugetUrl]: https://www.nuget.org/packages/CaptchaN.Abstractions
+[CaptchaN-Drawing-ImageSharp-SvgUrl]: https://img.shields.io/nuget/v/CaptchaN.Drawing.ImageSharp.svg
+[CaptchaN-Drawing-ImageSharp-NugetUrl]: https://www.nuget.org/packages/CaptchaN.Drawing.ImageSharp
 
 ![Image Demo](https://raw.githubusercontent.com/LeaFrock/CaptchaN/main/Images/name.jpeg)
 
-Generate captcha images based on [ImageSharp][ImageSharpUrl] and .NET.
->基于[ImageSharp][ImageSharpUrl]项目和.NET，生成图形验证码。
+Generate captcha images based on dotNET.
+>用于生成图形验证码的开源.NET库。
 
-[![.NET 8](https://img.shields.io/badge/.NET-8-brightgreen)][DotNetUrl]
+[![.NET 10](https://img.shields.io/badge/.NET-10-brightgreen)][DotNetUrl]
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Packages |Nuget包
 
 |         Name          |           Description           |                                       NugetPackage                                       |
 | :-------------------: | :-----------------------------: | :--------------------------------------------------------------------------------------: |
-|       CaptchaN        |           Core module           |                    [![CaptchaN][CaptchaN-SvgUrl]][CaptchaN-NugetUrl]                     |
-| CaptchaN.DI.Microsoft | DI module for default container | [![CaptchaN.DI.Microsoft][CaptchaN-DI-Microsoft-SvgUrl]][CaptchaN-DI-Microsoft-NugetUrl] |
+|       CaptchaN.Abstractions       |           Abstractions module           |                    [![CaptchaN.Abstractions][CaptchaN-Abstractions-SvgUrl]][CaptchaN-Abstractions-NugetUrl]                     |
+| CaptchaN.Drawing.ImageSharp | Powered by [ImageSharp](https://github.com/SixLabors/ImageSharp) | [![CaptchaN.Drawing.ImageSharp][CaptchaN-Drawing-ImageSharp-SvgUrl]][CaptchaN-Drawing-ImageSharp-NugetUrl] |
 
 ## QuickStart |快速入门
 
-The following is main codes for basic usage.
+```csharp
+using CaptchaN.Abstractions;
+using CaptchaN.Drawing.ImageSharp;
 
-``` C#
-// Load or install fonts(*.ttf) which are provided by yourself
-IFontRandomerFactory fontRandomerFactory = new ...;
-IFontRandomer fontRandomer = fontRandomerFactory.CreateFontRandomer();
-// Init color randomer
-IColorRandomer colorRandomer = new ...;
-IPainter painter = new Painter(fontRandomer, colorRandomer);
-// Init the content settings for images
-PainterOption painterOption = new(){...};
-// Optional. Generate random text for solid length
-ICodeTextGenerator codeTextGenerator = new ...;
-string codeText = codeTextGenerator.Generate(4);
-// Generate an image
-await painter.GenerateImageAsync(codeText, painterOption);
+builder.Services.AddCaptchaN()
+    .AddDefaultCodeTextGenerator()
+    .AddPaintConfig(builder.Configuration.GetSection(nameof(PaintConfig)))
+    .AddImageSharpPainter(builder.Configuration.GetSection("ImageSharpPainter"));
+
+Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
 ```
 
 Please see [Wiki](https://github.com/LeaFrock/CaptchaN/wiki) and [Samples](https://github.com/LeaFrock/CaptchaN/tree/main/Samples) for details.
