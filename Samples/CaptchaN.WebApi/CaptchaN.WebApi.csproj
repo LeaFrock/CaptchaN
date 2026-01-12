@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 	<ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\CaptchaN.DI.Microsoft\CaptchaN.DI.Microsoft.csproj" />
+    <Folder Include="Fonts\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Fonts\" />
+    <ProjectReference Include="..\..\Src\CaptchaN.Drawing.ImageSharp\CaptchaN.Drawing.ImageSharp.csproj" />
   </ItemGroup>
 
 </Project>

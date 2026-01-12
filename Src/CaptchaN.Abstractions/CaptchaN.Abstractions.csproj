@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<LangVersion>14.0</LangVersion>
+	<PackageId>CaptchaN.Abstractions</PackageId>
+	<Title>CaptchaN.Abstractions</Title>
+	<Authors>LeaFrock</Authors>
+	<Version>1.0.0</Version>
+	<Product>CaptchaN</Product>
+	<Description>Abstractions of generating captcha images.</Description>
+	<Copyright>Copyright © LeaFrock 2026</Copyright>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageTags>captcha;leaflib</PackageTags>
+	<PackageProjectUrl>https://github.com/LeaFrock/CaptchaN</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/LeaFrock/CaptchaN.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageIcon>leaf.png</PackageIcon>
+	<PackageReleaseNotes></PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.*" />
+	<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+  	<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+	<None Include="..\..\leaf.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

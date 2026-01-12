@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Samples/">
+    <Project Path="../Samples/CaptchaN.WebApi/CaptchaN.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/Src/">
+    <Project Path="CaptchaN.Abstractions/CaptchaN.Abstractions.csproj" />
+    <Project Path="CaptchaN.Drawing.ImageSharp/CaptchaN.Drawing.ImageSharp.csproj" />
+  </Folder>
+</Solution>
