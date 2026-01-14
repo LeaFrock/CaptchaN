@@ -132,7 +132,7 @@ public partial class Painter
                 var fontSize = RandomInterferCharFontSize(random, config.PainterOption.MaxFontSize);
                 for (int i = 0; i < interferCharCount; i++)
                 {
-                    var charText = char.ToString(Constants.Alphabet[random.Next(Constants.Alphabet.Length)]);
+                    var charText = char.ToString(RandomInterferChar(random, Constants.Alphabet));
                     var font = Fonts.RandomPick(random, fontSize);
                     var location = RandomTopLeftLocation(fontSize * 3 / 2);
                     imgContext.DrawText(text: charText,
@@ -144,6 +144,8 @@ public partial class Painter
             return this;
 
             static int RandomInterferCharFontSize(Random r, in int maxFontSize) => (int)Math.Ceiling(maxFontSize * 0.15d * (1 + r.NextDouble()));
+
+            static char RandomInterferChar(Random r, string alphabet) => alphabet[r.Next(alphabet.Length)];
         }
 
         public void Resize()

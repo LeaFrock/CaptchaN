@@ -1,17 +1,22 @@
 using CaptchaN.Abstractions;
-using CaptchaN.Drawing.ImageSharp;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettings.painter.json", optional: false, reloadOnChange: true);
 
 builder.Services.AddCaptchaN()
     .AddDefaultCodeTextGenerator()
     .AddPaintConfig(builder.Configuration.GetSection(nameof(PaintConfig)))
-    .AddImageSharpPainter(builder.Configuration.GetSection("ImageSharpPainter"));
+    //.AddImageSharpPainter(builder.Configuration.GetSection("ImageSharp"))
+    .AddImageMagickPainter(builder.Configuration.GetSection("ImageMagick"));
 
-Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
+// CaptchaN.Drawing.ImageSharp.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
+CaptchaN.Drawing.ImageMagick.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSimpleConsole();
 
 var app = builder.Build();
 
