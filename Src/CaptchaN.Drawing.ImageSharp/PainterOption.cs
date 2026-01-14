@@ -29,20 +29,20 @@ public sealed class PainterOption : IValidatableObject
         {
             if (!Directory.Exists(FontFolderPath))
             {
-                yield return new($"字体文件夹不存在 \n");
+                yield return new($"Font directory not found \n");
             }
         }
         if (!ValidateRange(FontOffsetXRange))
         {
-            yield return new($"{nameof(FontOffsetXRange)}配置错误 \n");
+            yield return new($"{nameof(FontOffsetXRange)} error \n");
         }
         if (!ValidateRange(FontOffsetYRange))
         {
-            yield return new($"{nameof(FontOffsetYRange)}配置错误 \n");
+            yield return new($"{nameof(FontOffsetYRange)} error \n");
         }
         if (Quality < 50 || Quality > 100)
         {
-            yield return new($"{nameof(Quality)}必须在50~100之间 \n");
+            yield return new($"{nameof(Quality)} must be between 50~100 \n");
         }
         yield return ValidationResult.Success!;
     }

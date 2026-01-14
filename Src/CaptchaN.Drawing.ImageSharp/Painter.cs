@@ -32,9 +32,7 @@ public sealed partial class Painter(PainterOption option) : IPainter
 
     private Image<Rgba32> CreateImage(string codeText, ImageSize size, PaintConfig config)
     {
-        Image<Rgba32> img = new(
-            Math.Max(size.Width, Constants.DefaultWidth),
-            Math.Max(size.Height, Constants.DefaultHeight));
+        Image<Rgba32> img = new(CaptchaConstants.DefaultWidth, CaptchaConstants.DefaultHeight);
         // img.Configuration.ImageFormatsManager.SetEncoder(JpegFormat.Instance, DafaultJpegEncoder);
         var penConf = new MaoPenConfig()
         {

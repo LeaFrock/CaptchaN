@@ -4,6 +4,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Processing;
+using Constants = CaptchaN.Abstractions.CaptchaConstants;
 
 namespace CaptchaN.Drawing.ImageSharp;
 
@@ -25,7 +26,7 @@ public partial class Painter
         public MaoPen DrawCode()
         {
             var code = config.CodeText;
-            var fontSize = config.PainterOption.MaxFontSize * random.Next(90, 101) / 100; ;
+            var fontSize = config.PainterOption.MaxFontSize * random.Next(90, 101) / 100;
             var blockWidth = Constants.DefaultWidth / code.Length;
             for (int i = 0; i < code.Length; i++)
             {
