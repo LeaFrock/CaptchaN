@@ -1,6 +1,6 @@
-﻿namespace CaptchaN.Drawing.ImageSharp;
+﻿namespace CaptchaN.Abstractions;
 
-internal static class Constants
+public static class CaptchaConstants
 {
     public const int AspectRatio = 4;
 

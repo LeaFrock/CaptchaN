@@ -8,7 +8,7 @@
 	<PackageId>CaptchaN.Drawing.ImageSharp</PackageId>
 	<Title>CaptchaN.Drawing.ImageSharp</Title>
 	<Authors>LeaFrock</Authors>
-	<Version>4.0.0</Version>
+	<Version>4.0.1</Version>
 	<Product>CaptchaN</Product>
 	<Description>Draw Captcha based on ImageSharp.</Description>
 	<Copyright>Copyright © LeaFrock 2026</Copyright>
