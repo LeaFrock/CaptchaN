@@ -1,5 +1,4 @@
 using CaptchaN.Abstractions;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -10,10 +9,13 @@ builder.Services.AddCaptchaN()
     .AddDefaultCodeTextGenerator()
     .AddPaintConfig(builder.Configuration.GetSection(nameof(PaintConfig)))
     //.AddImageSharpPainter(builder.Configuration.GetSection("ImageSharp"))
-    .AddImageMagickPainter(builder.Configuration.GetSection("ImageMagick"));
+    .AddImageMagickPainter(builder.Configuration.GetSection("ImageMagick"))
+    //.AddSkiaSharpPainter(builder.Configuration.GetSection("SkiaSharp"))
+    ;
 
 // CaptchaN.Drawing.ImageSharp.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
 CaptchaN.Drawing.ImageMagick.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
+// CaptchaN.Drawing.SkiaSharp.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSimpleConsole();
@@ -23,7 +25,7 @@ var app = builder.Build();
 var painter = app.Services.GetRequiredService<IPainter>();
 painter.NoOp(); // Make sure the painter is initialized correctly.
 
-app.MapGet("/captcha", FileContentHttpResult (
+app.MapGet("/captcha", IResult (
     [FromQuery(Name = "sc")] int? sizeCode,
     [FromServices] ICodeTextGenerator codeTextGenerator,
     [FromServices] IPainter painter,
@@ -41,6 +43,8 @@ app.MapGet("/captcha", FileContentHttpResult (
     var codeText = codeTextGenerator.Generate(4);
     var image = painter.GenerateImage(codeText, size, configOpt.Value);
     return TypedResults.File(image, "image/jpeg; charset=UTF-8");
+    //var imageBase64 = painter.GenerateImageBase64Text(codeText, size, configOpt.Value);
+    //return TypedResults.Ok(imageBase64);
 });
 
 app.Run();

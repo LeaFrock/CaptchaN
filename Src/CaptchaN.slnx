@@ -6,5 +6,6 @@
     <Project Path="CaptchaN.Abstractions/CaptchaN.Abstractions.csproj" />
     <Project Path="CaptchaN.Drawing.ImageMagick/CaptchaN.Drawing.ImageMagick.csproj" Id="b37c5609-753d-4e85-9efd-f3c3fe45ead0" />
     <Project Path="CaptchaN.Drawing.ImageSharp/CaptchaN.Drawing.ImageSharp.csproj" />
+    <Project Path="CaptchaN.Drawing.SkiaSharp/CaptchaN.Drawing.SkiaSharp.csproj" Id="c1781278-a282-46c5-bf8e-918c65658d3b" />
   </Folder>
 </Solution>
