@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net8.0;net10.0</TargetFrameworks>
+		<LangVersion>14.0</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageId>CaptchaN.Drawing.SkiaSharp</PackageId>
+		<Title>CaptchaN.Drawing.SkiaSharp</Title>
+		<Authors>LeaFrock</Authors>
+		<Version>4.0.0</Version>
+		<Product>CaptchaN</Product>
+		<Description>Draw Captcha based on SkiaSharp.</Description>
+		<Copyright>Copyright © LeaFrock 2026</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageTags>captcha;skiasharp;leaflib</PackageTags>
+		<PackageProjectUrl>https://github.com/LeaFrock/CaptchaN</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/LeaFrock/CaptchaN.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>leaf.png</PackageIcon>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.*" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.*" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net10.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.*" />
+		<PackageReference Include="SkiaSharp" Version="3.119.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CaptchaN.Abstractions\CaptchaN.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\leaf.png" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+</Project>

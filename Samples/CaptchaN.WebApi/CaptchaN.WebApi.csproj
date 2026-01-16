@@ -12,6 +12,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Src\CaptchaN.Drawing.ImageMagick\CaptchaN.Drawing.ImageMagick.csproj" />
     <ProjectReference Include="..\..\Src\CaptchaN.Drawing.ImageSharp\CaptchaN.Drawing.ImageSharp.csproj" />
+    <ProjectReference Include="..\..\Src\CaptchaN.Drawing.SkiaSharp\CaptchaN.Drawing.SkiaSharp.csproj" />
   </ItemGroup>
 
 </Project>
