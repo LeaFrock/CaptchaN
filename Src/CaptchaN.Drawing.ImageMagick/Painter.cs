@@ -17,7 +17,8 @@ public sealed partial class Painter(PainterOption option) : IPainter
     public string GenerateImageBase64Text(string codeText, ImageSize size, PaintConfig config)
     {
         using var image = CreateImage(codeText, size, config);
-        return image.ToBase64();
+        const string contentType = "image/jpeg";
+        return $"data:{contentType};base64,{image.ToBase64()}";
     }
 
     private MagickImage CreateImage(string codeText, ImageSize size, PaintConfig config)
