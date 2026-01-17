@@ -8,14 +8,14 @@ builder.Configuration.AddJsonFile("appsettings.painter.json", optional: false, r
 builder.Services.AddCaptchaN()
     .AddDefaultCodeTextGenerator()
     .AddPaintConfig(builder.Configuration.GetSection(nameof(PaintConfig)))
+    .AddSkiaSharpPainter(builder.Configuration.GetSection("SkiaSharp"))
     //.AddImageSharpPainter(builder.Configuration.GetSection("ImageSharp"))
-    .AddImageMagickPainter(builder.Configuration.GetSection("ImageMagick"))
-    //.AddSkiaSharpPainter(builder.Configuration.GetSection("SkiaSharp"))
+    //.AddImageMagickPainter(builder.Configuration.GetSection("ImageMagick"))
     ;
 
+CaptchaN.Drawing.SkiaSharp.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
 // CaptchaN.Drawing.ImageSharp.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
-CaptchaN.Drawing.ImageMagick.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
-// CaptchaN.Drawing.SkiaSharp.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
+// CaptchaN.Drawing.ImageMagick.Fonts.UseDirectoryFonts(new(Path.Combine(builder.Environment.ContentRootPath, "Fonts")));
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSimpleConsole();
