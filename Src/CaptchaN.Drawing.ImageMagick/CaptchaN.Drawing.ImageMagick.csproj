@@ -8,7 +8,7 @@
     <PackageId>CaptchaN.Drawing.ImageMagick</PackageId>
     <Title>CaptchaN.Drawing.ImageMagick</Title>
     <Authors>LeaFrock</Authors>
-    <Version>4.0.0</Version>
+    <Version>4.0.1</Version>
     <Product>CaptchaN</Product>
     <Description>Draw Captcha based on ImageMagick.</Description>
     <Copyright>Copyright © LeaFrock 2026</Copyright>
@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/LeaFrock/CaptchaN</PackageProjectUrl>
     <RepositoryUrl>https://github.com/LeaFrock/CaptchaN.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>Add support for .NET 10</PackageReleaseNotes>
+    <PackageReleaseNotes>Bump Magick.NET to latest</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageIcon>leaf.png</PackageIcon>
@@ -27,7 +27,7 @@
 	<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.*" />
 	<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.*" />
 	<PackageReference Condition="'$(TargetFramework)' == 'net10.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.*" />
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.10.1" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.16.0" />
   </ItemGroup>
 
   <ItemGroup>
