@@ -39,8 +39,7 @@ public static class Fonts
             {
                 foreach (var file in files)
                 {
-                    using var s = file.OpenRead();
-                    typefaces.Add(SKTypeface.FromStream(s));
+                    typefaces.Add(SKTypeface.FromFile(file.FullName));
                 }
                 EnsureFontsLoaded(typefaces);
                 Typefaces = typefaces;

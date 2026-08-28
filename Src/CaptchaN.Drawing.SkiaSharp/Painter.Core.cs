@@ -7,10 +7,14 @@ namespace CaptchaN.Drawing.SkiaSharp;
 
 public partial class Painter
 {
-    private readonly struct MaoPen(SKBitmap bitmap)
+    private struct MaoPen(SKBitmap bitmap)
     {
         private readonly SKCanvas canvas = new(bitmap);
         private readonly SKPaint paint = new() { IsAntialias = true };
+
+        private SKPathBuilder? _pathBuilder;
+
+        private SKPathBuilder PathBuilder => _pathBuilder ??= new();
 
         public string CodeText { get; init; } = string.Empty;
 
@@ -22,14 +26,14 @@ public partial class Painter
 
         public Random Random { get; init; } = default!;
 
-        public MaoPen Background()
+        public readonly MaoPen Background()
         {
             var bg = PaintConfig.UseBlackWhiteOnly ? SKColors.White : Colors.RandomLight(Random);
             canvas.Clear(bg);
             return this;
         }
 
-        public MaoPen DrawCode()
+        public readonly MaoPen DrawCode()
         {
             var code = CodeText;
             var fontSize = PainterOption.MaxFontSize * Random.Next(90, 101) / 100;
@@ -46,7 +50,7 @@ public partial class Painter
             return this;
         }
 
-        public MaoPen DrawPoints()
+        public readonly MaoPen DrawPoints()
         {
             var pointCount = PaintConfig.PointCount;
             if (pointCount > 0)
@@ -65,7 +69,7 @@ public partial class Painter
             return this;
         }
 
-        public MaoPen DrawBubbles()
+        public readonly MaoPen DrawBubbles()
         {
             var bubbleCount = PaintConfig.BubbleCount;
             if (bubbleCount > 0)
@@ -90,6 +94,7 @@ public partial class Painter
             {
                 paint.Style = SKPaintStyle.Stroke;
                 paint.StrokeWidth = 1;
+                var pathBuilder = PathBuilder;
                 var prongsMask = (ulong)Random.NextInt64();
                 for (int i = 0; i < starCount; i++)
                 {
@@ -97,27 +102,29 @@ public partial class Painter
                     var r = RandomShapeSize(0.2d);
                     var (x, y) = RandomCenterLocation(r);
                     paint.Color = RandomDark(180);
-                    Star(canvas, paint, x, y, prongs: prongs, innerR: r * 0.01f * Random.Next(32, 81), outerR: r);
+                    Star(pathBuilder, x, y, prongs: prongs, innerR: r * 0.01f * Random.Next(32, 81), outerR: r);
+                    using var path = pathBuilder.Detach();
+                    canvas.DrawPath(path, paint);
                     prongsMask = BitOperations.RotateRight(prongsMask, 2);
                 }
             }
             return this;
 
-            static void Star(SKCanvas c, SKPaint p, float cx, float cy, int prongs, float innerR, float outerR)
+            static void Star(SKPathBuilder pb, float cx, float cy, int prongs, float innerR, float outerR)
             {
-                using var path = new SKPath();
-                path.MoveTo(cx + outerR, cy);
-                float angleStep = 360f / prongs;
-                for (int i = 1; i <= prongs * 2; i++)
+                Span<SKPoint> points = stackalloc SKPoint[prongs * 2];
+                var angleStep = 360f / prongs;
+
+                for (var i = 0; i < points.Length; i++)
                 {
                     var angle = i * angleStep * 0.5f * MathF.PI / 180f;
                     var r = (i & 1) == 0 ? outerR : innerR;
                     var x = cx + r * MathF.Cos(angle);
                     var y = cy + r * MathF.Sin(angle);
-                    path.LineTo(x, y);
+                    points[i] = new SKPoint(x, y);
                 }
-                path.Close();
-                c.DrawPath(path, p);
+
+                pb.AddPoly(points, close: true);
             }
         }
 
@@ -129,24 +136,27 @@ public partial class Painter
                 var random = Random;
                 paint.Style = SKPaintStyle.Stroke;
                 paint.StrokeWidth = 2;
-                using var path = new SKPath();
+                var pathBuilder = PathBuilder;
                 var blockWidth = Constants.DefaultWidth / 4;
-                path.MoveTo(2, RandomY(random));
-                path.CubicTo(
+                pathBuilder.MoveTo(2, RandomY(random));
+                pathBuilder.CubicTo(
                     new((int)(blockWidth * (1 + random.NextDouble())), RandomY(random)),
                     new((int)(blockWidth * (2 + random.NextDouble())), RandomY(random)),
                     new(Constants.DefaultWidth - 2, RandomY(random)));
                 paint.Color = RandomDark(200);
-                canvas.DrawPath(path, paint);
+                using (var path = pathBuilder.Detach())
+                {
+                    canvas.DrawPath(path, paint);
+                }
 
                 blockWidth = Constants.DefaultWidth / 8;
                 for (int i = 1; i < lineCount; i++)
                 {
-                    path.Reset();
-                    path.MoveTo(x: random.Next(1, blockWidth), y: RandomY(random));
-                    path.LineTo(x: random.Next(blockWidth * 3, blockWidth * 5), y: RandomY(random));
-                    path.LineTo(x: random.Next(Constants.DefaultWidth - blockWidth, Constants.DefaultWidth), y: RandomY(random));
+                    pathBuilder.MoveTo(x: random.Next(1, blockWidth), y: RandomY(random));
+                    pathBuilder.LineTo(x: random.Next(blockWidth * 3, blockWidth * 5), y: RandomY(random));
+                    pathBuilder.LineTo(x: random.Next(Constants.DefaultWidth - blockWidth, Constants.DefaultWidth), y: RandomY(random));
                     paint.Color = RandomDark(200);
+                    using var path = pathBuilder.Detach();
                     canvas.DrawPath(path, paint);
                 }
             }
@@ -155,7 +165,7 @@ public partial class Painter
             static int RandomY(Random rand) => rand.Next(1, Constants.DefaultHeight);
         }
 
-        public MaoPen DrawInterferChars()
+        public readonly MaoPen DrawInterferChars()
         {
             var interferCharCount = PaintConfig.InterferCharCount;
             if (interferCharCount > 0)
@@ -177,10 +187,12 @@ public partial class Painter
             static char RandomInterferChar(Random r, string alphabet) => alphabet[r.Next(alphabet.Length)];
         }
 
-        public SKBitmap Resize()
+        public readonly SKBitmap Resize()
         {
             canvas.Dispose();
             paint.Dispose();
+            _pathBuilder?.Dispose();
+
             var size = Size;
             if (size.Width < Constants.DefaultWidth && size.Height < Constants.DefaultHeight)
             {
@@ -189,29 +201,29 @@ public partial class Painter
             return bitmap;
         }
 
-        private SKColor RandomDark() => PaintConfig.UseBlackWhiteOnly
+        private readonly SKColor RandomDark() => PaintConfig.UseBlackWhiteOnly
             ? SKColors.Black
             : Colors.RandomDark(Random);
 
-        private SKColor RandomDark(byte alpha) => RandomDark().WithAlpha(alpha);
+        private readonly SKColor RandomDark(byte alpha) => RandomDark().WithAlpha(alpha);
 
-        private int RandomShapeSize(double ratio)
+        private readonly int RandomShapeSize(double ratio)
             => (int)Math.Ceiling(Constants.DefaultHeight * ratio * (1 + Random.NextDouble()));
 
-        private (float x, float y) RandomTopLeftLocation(int shapeSize, int paddingSize = 1)
+        private readonly (float x, float y) RandomTopLeftLocation(int shapeSize, int paddingSize = 1)
         {
             var x = Random.Next(paddingSize, Constants.DefaultWidth - shapeSize - paddingSize);
             var y = Random.Next(paddingSize, Constants.DefaultHeight - shapeSize - paddingSize);
             return (x, y);
         }
 
-        private (float x, float y) RandomCenterLocation(int radius, int paddingSize = 1)
+        private readonly (float x, float y) RandomCenterLocation(int radius, int paddingSize = 1)
         {
             var x = Random.Next(radius + paddingSize, Constants.DefaultWidth - radius - paddingSize);
             var y = Random.Next(radius + paddingSize, Constants.DefaultHeight - radius - paddingSize);
             return (x, y);
         }
 
-        private int RandomOffset(int[] offset) => Random.Next(offset[0], offset[1] + 1);
+        private readonly int RandomOffset(int[] offset) => Random.Next(offset[0], offset[1] + 1);
     }
 }
