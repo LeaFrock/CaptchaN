@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CaptchaN.Abstractions;
 using SixLabors.Fonts;
 
 namespace CaptchaN.Drawing.ImageSharp;
@@ -15,47 +15,59 @@ public static class Fonts
         return family.CreateFont(size, style);
     }
 
-    public static void UseSystemFonts(Func<FontFamily, bool>? filter = default)
+    public static void UseSystemFonts(Predicate<FontMetrics>? match)
     {
         var fc = new FontCollection();
-        fc.AddSystemFonts();
-        var families = filter is null
-            ? fc.Families.ToArray()
-            : [.. fc.Families.Where(filter)];
-        EnsureFontsLoaded(families);
+        if (match is null)
+        {
+            fc.AddSystemFonts();
+        }
+        else
+        {
+            fc.AddSystemFonts(match);
+        }
+        var families = fc.Families.ToArray();
+        EnsureFontsLoaded(families, SystemFonts.Collection.SearchDirectories);
         FontFamilies = families;
     }
 
     public static void UseDirectoryFonts(DirectoryInfo directory)
     {
-        if (directory.Exists)
+        if (!directory.Exists)
         {
-            var fc = new FontCollection();
-            var files = directory.GetFiles("*.ttf", SearchOption.TopDirectoryOnly);
-            if (files is { Length: > 0 })
+            FontsNotLoadException.Throw(directory.FullName);
+            return;
+        }
+
+        var fc = new FontCollection();
+        foreach (var file in directory.EnumerateFiles())
+        {
+            if (FontConstants.SingleFontFileSupported(file))
             {
-                foreach (var file in files)
-                {
-                    using var s = file.OpenRead();
-                    fc.Add(s);
-                }
-                var families = fc.Families.ToArray();
-                EnsureFontsLoaded(families);
-                FontFamilies = families;
-                return;
+                fc.Add(file.FullName);
+            }
+            else if (FontConstants.MultiFontFileSupported(file))
+            {
+                fc.AddCollection(file.FullName);
             }
         }
-        Throw();
+        var families = fc.Families.ToArray();
+        EnsureFontsLoaded(families, [directory.FullName]);
+        FontFamilies = families;
     }
 
-    private static void EnsureFontsLoaded(IReadOnlyList<FontFamily> families)
+    private static void EnsureFontsLoaded(IReadOnlyList<FontFamily> families, IEnumerable<string>? searchDirs = default)
     {
         if (families.Count == 0)
         {
-            Throw();
+            if (searchDirs is null)
+            {
+                FontsNotLoadException.Throw();
+            }
+            else
+            {
+                FontsNotLoadException.Throw(searchDirs);
+            }
         }
     }
-
-    [DoesNotReturn]
-    private static void Throw() => throw new InvalidOperationException("No fonts loaded!");
 }

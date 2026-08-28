@@ -1,5 +1,6 @@
 ﻿using CaptchaN.Abstractions;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
@@ -43,15 +44,18 @@ public sealed partial class Painter(PainterOption option) : IPainter
         };
         img.Mutate(ctx =>
         {
-            new MaoPen(ctx, Random.Shared, penConf)
-                .Background()
-                .DrawCode()
-                .DrawPoints()
-                .DrawBubbles()
-                .DrawStars()
-                .DrawLines()
-                .DrawInterferChars()
-                .Resize();
+            var pen = new MaoPen(Random.Shared, penConf);
+            pen.Background(ctx);
+            ctx.Paint(cv =>
+            {
+                pen.DrawCode(cv)
+                   .DrawPoints(cv)
+                   .DrawBubbles(cv)
+                   .DrawStars(cv)
+                   .DrawLines(cv)
+                   .DrawInterferChars(cv);
+            });
+            pen.Resize(ctx);
         });
         return img;
     }
