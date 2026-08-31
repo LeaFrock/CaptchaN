@@ -10,7 +10,11 @@ public static class Fonts
     public static Font RandomPick(Random rand, float size, FontStyle style = FontStyle.Regular)
     {
         var families = FontFamilies;
-        EnsureFontsLoaded(families);
+        if (families.Count == 0)
+        {
+            FontsNotLoadException.Throw();
+        }
+
         var family = families[rand.Next(families.Count)];
         return family.CreateFont(size, style);
     }
@@ -27,7 +31,12 @@ public static class Fonts
             fc.AddSystemFonts(match);
         }
         var families = fc.Families.ToArray();
-        EnsureFontsLoaded(families, SystemFonts.Collection.SearchDirectories);
+        if (families.Length == 0)
+        {
+            FontsNotLoadException.Throw(SystemFonts.Collection.SearchDirectories);
+            return;
+        }
+
         FontFamilies = families;
     }
 
@@ -52,22 +61,12 @@ public static class Fonts
             }
         }
         var families = fc.Families.ToArray();
-        EnsureFontsLoaded(families, [directory.FullName]);
-        FontFamilies = families;
-    }
-
-    private static void EnsureFontsLoaded(IReadOnlyList<FontFamily> families, IEnumerable<string>? searchDirs = default)
-    {
-        if (families.Count == 0)
+        if (families.Length == 0)
         {
-            if (searchDirs is null)
-            {
-                FontsNotLoadException.Throw();
-            }
-            else
-            {
-                FontsNotLoadException.Throw(searchDirs);
-            }
+            FontsNotLoadException.Throw(directory.FullName);
+            return;
         }
+
+        FontFamilies = families;
     }
 }

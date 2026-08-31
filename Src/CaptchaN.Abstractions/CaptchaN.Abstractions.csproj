@@ -7,7 +7,7 @@
 	<PackageId>CaptchaN.Abstractions</PackageId>
 	<Title>CaptchaN.Abstractions</Title>
 	<Authors>LeaFrock</Authors>
-	<Version>1.0.1</Version>
+	<Version>1.0.2</Version>
 	<Product>CaptchaN</Product>
 	<Description>Abstractions of generating captcha images.</Description>
 	<Copyright>Copyright © LeaFrock 2026</Copyright>

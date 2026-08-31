@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CaptchaN.Abstractions;
 using SkiaSharp;
 
 namespace CaptchaN.Drawing.SkiaSharp;
@@ -10,7 +10,11 @@ public static class Fonts
     public static SKFont RandomPick(Random rand, float size)
     {
         var typefaces = Typefaces;
-        EnsureFontsLoaded(typefaces);
+        if (typefaces.Count == 0)
+        {
+            FontsNotLoadException.Throw();
+        }
+
         var family = typefaces[rand.Next(typefaces.Count)];
         return family.ToFont(size);
     }
@@ -25,38 +29,38 @@ public static class Fonts
         {
             typefaces.Add(SKTypeface.FromFamilyName(fn));
         }
-        EnsureFontsLoaded(typefaces);
+        if (typefaces.Count == 0)
+        {
+            FontsNotLoadException.Throw();
+            return;
+        }
+
         Typefaces = typefaces;
     }
 
     public static void UseDirectoryFonts(DirectoryInfo directory)
     {
-        if (directory.Exists)
+        if (!directory.Exists)
         {
-            List<SKTypeface> typefaces = [];
-            var files = directory.GetFiles("*.ttf", SearchOption.TopDirectoryOnly);
-            if (files is { Length: > 0 })
+            FontsNotLoadException.Throw(directory.FullName);
+            return;
+        }
+
+        List<SKTypeface> typefaces = [];
+        foreach (var file in directory.EnumerateFiles())
+        {
+            if (FontConstants.SingleFontFileSupported(file) || FontConstants.MultiFontFileSupported(file))
             {
-                foreach (var file in files)
-                {
-                    typefaces.Add(SKTypeface.FromFile(file.FullName));
-                }
-                EnsureFontsLoaded(typefaces);
-                Typefaces = typefaces;
-                return;
+                typefaces.Add(SKTypeface.FromFile(file.FullName));
             }
         }
-        Throw();
-    }
 
-    private static void EnsureFontsLoaded(IReadOnlyList<SKTypeface> typefaces)
-    {
         if (typefaces.Count == 0)
         {
-            Throw();
+            FontsNotLoadException.Throw(directory.FullName);
+            return;
         }
-    }
 
-    [DoesNotReturn]
-    private static void Throw() => throw new InvalidOperationException("No fonts loaded!");
+        Typefaces = typefaces;
+    }
 }

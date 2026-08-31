@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using CaptchaN.Abstractions;
 using ImageMagick;
 
 namespace CaptchaN.Drawing.ImageMagick;
@@ -10,7 +10,11 @@ public static class Fonts
     public static string RandomPick(Random rand)
     {
         var families = FontFamilies;
-        EnsureFontsLoaded(families);
+        if (families.Count == 0)
+        {
+            FontsNotLoadException.Throw();
+        }
+
         var family = families[rand.Next(families.Count)];
         return family;
     }
@@ -20,38 +24,37 @@ public static class Fonts
         var families = filter is null
             ? MagickNET.FontFamilies
             : [.. MagickNET.FontFamilies.Where(filter)];
-        EnsureFontsLoaded(families);
+        if (families.Count == 0)
+        {
+            FontsNotLoadException.Throw();
+            return;
+        }
         FontFamilies = families;
     }
 
     public static void UseDirectoryFonts(DirectoryInfo directory)
     {
-        if (directory.Exists)
+        if (!directory.Exists)
         {
-            var files = directory.GetFiles("*.ttf", SearchOption.TopDirectoryOnly);
-            if (files is { Length: > 0 })
+            FontsNotLoadException.Throw(directory.FullName);
+            return;
+        }
+
+        List<string> families = [];
+        foreach (var file in directory.EnumerateFiles())
+        {
+            if (FontConstants.SingleFontFileSupported(file) || FontConstants.MultiFontFileSupported(file))
             {
-                List<string> families = new(files.Length);
-                foreach (var file in files)
-                {
-                    families.Add(file.FullName);
-                }
-                EnsureFontsLoaded(families);
-                FontFamilies = families;
-                return;
+                families.Add(file.FullName);
             }
         }
-        Throw();
-    }
 
-    private static void EnsureFontsLoaded(IReadOnlyList<string> families)
-    {
         if (families.Count == 0)
         {
-            Throw();
+            FontsNotLoadException.Throw(directory.FullName);
+            return;
         }
-    }
 
-    [DoesNotReturn]
-    private static void Throw() => throw new InvalidOperationException("No fonts loaded!");
+        FontFamilies = families;
+    }
 }

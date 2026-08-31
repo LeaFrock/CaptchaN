@@ -8,7 +8,7 @@
     <PackageId>CaptchaN.Drawing.ImageMagick</PackageId>
     <Title>CaptchaN.Drawing.ImageMagick</Title>
     <Authors>LeaFrock</Authors>
-    <Version>4.0.1</Version>
+    <Version>4.1.0</Version>
     <Product>CaptchaN</Product>
     <Description>Draw Captcha based on ImageMagick.</Description>
     <Copyright>Copyright © LeaFrock 2026</Copyright>
