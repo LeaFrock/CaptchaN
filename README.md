@@ -5,7 +5,7 @@
 Generate captcha images based on dotNET. 
 >用于生成图形验证码的开源.NET库。
 
-[![.NET 10](https://img.shields.io/badge/.NET-10-brightgreen)](https://dotnet.microsoft.com/download)
+[![.NET 11](https://img.shields.io/badge/.NET-11-brightgreen)](https://dotnet.microsoft.com/download)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## Packages |Nuget包
@@ -16,6 +16,7 @@ Generate captcha images based on dotNET.
 |  CaptchaN.Drawing.SkiaSharp  |    Powered by [SkiaSharp](https://github.com/mono/SkiaSharp)     |    [![CaptchaN.Drawing.SkiaSharp](https://img.shields.io/nuget/v/CaptchaN.Drawing.SkiaSharp.svg)](https://www.nuget.org/packages/CaptchaN.Drawing.SkiaSharp)    |
 | CaptchaN.Drawing.ImageSharp  | Powered by [ImageSharp](https://github.com/SixLabors/ImageSharp) |  [![CaptchaN.Drawing.ImageSharp](https://img.shields.io/nuget/v/CaptchaN.Drawing.ImageSharp.svg)](https://www.nuget.org/packages/CaptchaN.Drawing.ImageSharp)   |
 | CaptchaN.Drawing.ImageMagick | Powered by [Magick.NET](https://github.com/dlemstra/Magick.NET)  | [![CaptchaN.Drawing.ImageMagick](https://img.shields.io/nuget/v/CaptchaN.Drawing.ImageMagick.svg)](https://www.nuget.org/packages/CaptchaN.Drawing.ImageMagick) |
+| CaptchaN.Drawing.LibVips | Powered by [NetVips](https://github.com/kleisauke/net-vips)  | [![CaptchaN.Drawing.LibVips](https://img.shields.io/nuget/v/CaptchaN.Drawing.LibVips.svg)](https://www.nuget.org/packages/CaptchaN.Drawing.LibVips) |
 
 ## QuickStart |快速入门
 
@@ -27,6 +28,8 @@ dotnet add package CaptchaN.Drawing.SkiaSharp
 dotnet add package CaptchaN.Drawing.ImageSharp
 
 dotnet add package CaptchaN.Drawing.ImageMagick
+
+dotnet add package CaptchaN.Drawing.LibVips
 ```
 
 ### Wiki & samples | 维基和代码示例
