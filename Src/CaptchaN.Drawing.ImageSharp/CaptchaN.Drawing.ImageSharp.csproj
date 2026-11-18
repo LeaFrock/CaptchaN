@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-	<LangVersion>14.0</LangVersion>
+    <TargetFrameworks>net8.0;net10.0;net11.0</TargetFrameworks>
+	<LangVersion>15.0</LangVersion>
     <Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<PackageId>CaptchaN.Drawing.ImageSharp</PackageId>
 	<Title>CaptchaN.Drawing.ImageSharp</Title>
 	<Authors>LeaFrock</Authors>
-	<Version>4.1.0</Version>
+	<Version>4.1.1</Version>
 	<Product>CaptchaN</Product>
 	<Description>Draw Captcha based on ImageSharp.</Description>
 	<Copyright>Copyright © LeaFrock 2026</Copyright>
@@ -17,7 +17,7 @@
 	<PackageProjectUrl>https://github.com/LeaFrock/CaptchaN</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/LeaFrock/CaptchaN.git</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
-	<PackageReleaseNotes>Bump ImageSharp to v4</PackageReleaseNotes>
+	<PackageReleaseNotes>Bump ImageSharp to v4.1.x</PackageReleaseNotes>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageIcon>leaf.png</PackageIcon>
@@ -27,7 +27,8 @@
   <ItemGroup>
 	<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="8.*" />
 	<PackageReference Condition="'$(TargetFramework)' == 'net10.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.*" />
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="3.1.0" />
+	<PackageReference Condition="'$(TargetFramework)' == 'net11.0'" Include="Microsoft.Extensions.Options.DataAnnotations" Version="11.*" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="3.1.3" />
   </ItemGroup>
 
   <ItemGroup>
